@@ -105,7 +105,7 @@ app.put('/api/persons/update/:id', (request, response, next) => {
 })
 
 
-app.get('/api/info', (request, response) => {
+app.get('/info', (request, response) => {
   const currentTime = new Date().toUTCString()
   console.log("info")
   Phonebook.countDocuments({}).then(numberOfEntries => {
