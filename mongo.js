@@ -9,7 +9,7 @@ const password = process.argv[2]
 
 
 const url =
-  `mongodb+srv://phonebook:${password}@phonebook.fqtxno6.mongodb.net/`
+  `mongodb+srv://phonebook:${password}@phonebook.fqtxno6.mongodb.net/?retryWrites=true&w=majority`
  
 mongoose.set('strictQuery',false)
 mongoose.connect(url)

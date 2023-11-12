@@ -10,11 +10,19 @@ const getAll = () => {
   }
   
   const update = (id, newObject) => {
-    return axios.put(`${baseUrl}/${id}`, newObject)
+    return axios.put(`${baseUrl}/update/${id}`, newObject)
   }
   
   const remove = (id)=>{
-    return axios.delete(`${baseUrl}/${id}`)
+    console.log("remove"+id)
+    return axios.delete(`${baseUrl}/delete/${id}`).then((response) => {
+      console.log("Successfully deleted:", response.data);
+    })
+    .catch((error) => {
+      console.error("Error deleting:", error);
+    })
+
+    
   }
 
   export default { 

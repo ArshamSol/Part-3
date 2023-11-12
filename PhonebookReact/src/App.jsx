@@ -106,7 +106,8 @@ const App = () => {
             alert(
               `Information of '${newName}' was already deleted from server`
             )
-            setNotes(notes.filter(n => n.id !== id))
+            showNotification(error)
+            setPersons(persons.filter(n => n.id !== id))
           })
         }
       
@@ -119,7 +120,11 @@ const App = () => {
       setNewName('');
       setNewPhone('');
      
-      console.log(response)
+      console.log(`then ${response}`)
+    }).catch(error => {
+      console.log(`catch `)
+      showNotification(error.response.data.error)
+      //console.log(error.response.data.error)
     })
 
       
@@ -147,8 +152,9 @@ const App = () => {
   
     const confirmDelete = window.confirm(`Delete ${personToDelete.name}?`)
     if (confirmDelete) {
-      
+      console.log("delet "+id)
       personService.remove(id).then(response =>{
+        console.log(response)
         setPersons(persons.filter((person) => person.id !== id))
       })
     }
