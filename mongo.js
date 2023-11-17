@@ -10,7 +10,7 @@ const password = process.argv[2]
 
 const url =
   `mongodb+srv://phonebook:${password}@phonebook.fqtxno6.mongodb.net/?retryWrites=true&w=majority`
- 
+
 mongoose.set('strictQuery',false)
 mongoose.connect(url)
 
@@ -25,37 +25,37 @@ const phonebookSchema = new mongoose.Schema({
 const Phonebook = mongoose.model('Phonebook', phonebookSchema)
 
 const generateRandomId = () => {
-    const min = 10; 
-    const max = 999999; 
-    return Math.floor(Math.random() * (max - min)+ min);
+  const min = 10;
+  const max = 999999;
+  return Math.floor(Math.random() * (max - min)+ min);
 }
 
 
 if (process.argv[3]!== undefined && process.argv[4]!== undefined) {
-    
-    const givenName = process.argv[3]
-    const givenNumber = process.argv[4]
 
-    const phonebook = new Phonebook({
-        id: generateRandomId(),
-        name: givenName, 
-        number: givenNumber
+  const givenName = process.argv[3]
+  const givenNumber = process.argv[4]
+
+  const phonebook = new Phonebook({
+    id: generateRandomId(),
+    name: givenName,
+    number: givenNumber
+  })
+
+
+  phonebook.save().then(() => {
+    console.log('added '+phonebook.name +" number "+ phonebook.number+" to phonebook")
+    mongoose.connection.close()
+  })
+}
+else
+{
+  Phonebook.find({}).then(result => {
+    result.forEach(person => {
+      console.log(person)
     })
-
-
-    phonebook.save().then(result => {
-        console.log('added '+phonebook.name +" number "+ phonebook.number+" to phonebook")
-        mongoose.connection.close()
-      })
-  }
-  else
-  {
-    Phonebook.find({}).then(result => {
-        result.forEach(person => {
-          console.log(person)
-        })
-        mongoose.connection.close()
-      })
-  }
+    mongoose.connection.close()
+  })
+}
 
 

@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const Phonebook = require('./models/person')
-//npm start 
+//npm start
 //node index.js
 //npm run build
 
@@ -26,8 +26,8 @@ app.get('/api/persons', (request, response) => {
 })
 
 /*const generateRandomId = () => {
-    const min = 10; 
-    const max = 999999; 
+    const min = 10;
+    const max = 999999;
     return Math.floor(Math.random() * (max - min)+ min);
 }*/
 
@@ -36,8 +36,8 @@ app.post('/api/persons', (request, response, next) => {
   console.log("post")
 
   if (!body.name || !body.number) {
-    return response.status(400).json({ 
-      error: 'Name and number are required' 
+    return response.status(400).json({
+      error: 'Name and number are required'
     })
   }
 
@@ -66,8 +66,7 @@ app.get('/api/persons/:id', (request, response) => {
     } else {
       response.status(404).end()
     }
-  })
-  .catch(error => {
+  }).catch(error => {
     console.log(error)
     response.status(400).send({ error: 'malformatted id' })
   })
@@ -79,10 +78,11 @@ app.get('/api/persons/:id', (request, response) => {
 app.delete('/api/persons/delete/:id', (request, response, next) => {
   console.log("delet req "+request.params.id)
   Phonebook.findByIdAndDelete(request.params.id)
-  .then(result => {
-    response.status(204).end()
-  })
-  .catch(error => next(error))
+    .then(result => {
+      console.log(result)
+      response.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
 app.put('/api/persons/update/:id', (request, response, next) => {
@@ -94,14 +94,14 @@ app.put('/api/persons/update/:id', (request, response, next) => {
   }
 
   Phonebook.findByIdAndUpdate(request.params.id, person, { new: true })
-  .then(person => {
-    if (person) {
-      response.json(person)
-    } else {
-      response.status(404).end()
-    }
-  })
-  .catch(error => next(error))
+    .then(person => {
+      if (person) {
+        response.json(person)
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => next(error))
 })
 
 
@@ -115,8 +115,8 @@ app.get('/info', (request, response) => {
       <p>${currentTime}</p>
     `
     response.send(content)}
-  
-)})
+
+  )})
 
 
 morgan.token('req-body', (request) => {

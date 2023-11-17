@@ -6,11 +6,11 @@ mongoose.set('strictQuery', false)
 const url = process.env.MONGODB_URI
 
 
-console.log('connecting to', url)
+//console.log('connecting to', url)
 
 mongoose.connect(url)
 
-  .then(result => {
+  .then(() => {
     console.log('connected to MongoDB')
   })
   .catch((error) => {
@@ -18,13 +18,13 @@ mongoose.connect(url)
   })
 
 const phonebookSchema = new mongoose.Schema({
-    //id: Number,
-    name:{
-      type: String,
-      minLength: 3,
-      required: true
-    },
-    number: 
+  //id: Number,
+  name:{
+    type: String,
+    minLength: 3,
+    required: true
+  },
+  number:
     {
       type: String,
       required: true,
@@ -37,10 +37,10 @@ const phonebookSchema = new mongoose.Schema({
         message: props => `${props.value} is not a valid phone number!`
       }
     }
-  })
-  
+})
 
-  phonebookSchema.set('toJSON', {
+
+phonebookSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
